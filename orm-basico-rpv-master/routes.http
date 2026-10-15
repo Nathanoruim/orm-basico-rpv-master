@@ -1,0 +1,83 @@
+@baseUrl = http://localhost:3000
+
+### Criar tarefa com somente os campos obrigatorios
+POST {{baseUrl}}/tarefas
+Content-Type: application/json
+
+{
+  "titulo": "Estudar NestJS"
+}
+
+### Criar tarefa com descricao, prazo e prioridade
+POST {{baseUrl}}/tarefas
+Content-Type: application/json
+
+{
+  "titulo": "Revisar Prisma",
+  "descricao": "Ler a documentacao",
+  "prazo": "2026-12-31",
+  "prioridade": "ALTA"
+}
+
+### Prazo invalido (esperado: HTTP 400)
+POST {{baseUrl}}/tarefas
+Content-Type: application/json
+
+{
+  "titulo": "Prazo invalido",
+  "prazo": "amanha"
+}
+
+### Prioridade invalida (esperado: HTTP 400)
+POST {{baseUrl}}/tarefas
+Content-Type: application/json
+
+{
+  "titulo": "Prioridade invalida",
+  "prioridade": "URGENTE"
+}
+
+### Atualizacao parcial (substitua 1 por um id existente)
+PATCH {{baseUrl}}/tarefas/1
+Content-Type: application/json
+
+{
+  "concluida": true,
+  "prioridade": "MEDIA"
+}
+
+### Listar todas (mais antigas primeiro por padrao)
+GET {{baseUrl}}/tarefas
+
+### Filtrar tarefas concluidas ou pendentes
+GET {{baseUrl}}/tarefas?concluida=true
+
+###
+GET {{baseUrl}}/tarefas?concluida=false
+
+### Filtrar por prioridade
+GET {{baseUrl}}/tarefas?prioridade=ALTA
+
+### Buscar no titulo sem diferenciar maiusculas/minusculas
+GET {{baseUrl}}/tarefas?busca=nest
+
+### Ordenar por data de criacao
+GET {{baseUrl}}/tarefas?ordem=asc
+
+###
+GET {{baseUrl}}/tarefas?ordem=desc
+
+### Parametros invalidos (esperado: HTTP 400)
+GET {{baseUrl}}/tarefas?ordem=qualquer
+
+###
+GET {{baseUrl}}/tarefas?concluida=talvez
+
+###
+GET {{baseUrl}}/tarefas?prioridade=XPTO
+
+### Combinar todos os filtros
+GET {{baseUrl}}/tarefas?concluida=false&busca=nest&ordem=desc&prioridade=ALTA
+
+### Remover tarefa (substitua 1 por um id existente)
+DELETE {{baseUrl}}/tarefas/1

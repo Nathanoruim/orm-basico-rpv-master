@@ -1,0 +1,5 @@
+-- AlterTable
+ALTER TABLE `tarefas`
+    MODIFY COLUMN `descricao` VARCHAR(500) NULL,
+    ADD COLUMN `prazo` DATETIME(3) NULL,
+    ADD COLUMN `prioridade` ENUM('BAIXA', 'MEDIA', 'ALTA') NOT NULL DEFAULT 'MEDIA';
